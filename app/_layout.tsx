@@ -1,29 +1,77 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { useFonts, Manrope_400Regular, Manrope_700Bold, Manrope_800ExtraBold } from '@expo-google-fonts/manrope';
+import * as SplashScreen from 'expo-splash-screen';
+import { useEffect } from 'react';
+import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+// Inside your component:
+
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+  const insets = useSafeAreaInsets();
+  const [fontsLoaded] = useFonts({
+    Manrope_400Regular,
+    Manrope_700Bold,
+    Manrope_800ExtraBold,
   });
 
-  if (!loaded) {
-    // Async font loading only occurs in development.
+  useEffect(() => {
+    if (fontsLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
     return null;
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <Stack>
+      <Stack.Screen name="index" options={{ title: 'AI Logo',   headerStyle: {
+        backgroundColor: '#09090B', // Header arkaplanı siyah
+      },
+      headerTintColor: '#FAFAFA', // Geri tuşu ve başlık rengi beyaz
+      headerTitleStyle: {
+        fontFamily: 'Manrope_700Bold',
+      },}} />
+   <Stack.Screen 
+  name="output" 
+  options={{
+    headerBackVisible: false,
+    presentation: 'containedModal',
+    header: ({ navigation }) => (
+      <View style={[styles.customHeader, { paddingTop: insets.top + 12 }]}>
+        <Text style={styles.headerTitle}>Your Design</Text>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.closeButton}
+        >
+          <Ionicons name="close" size={24} color="#FAFAFA" />
+        </TouchableOpacity>
+      </View>
+    ),
+  }}
+/>
+    </Stack>
   );
 }
+
+const styles = StyleSheet.create({
+  customHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#09090B',
+    padding: 24,
+  },
+  headerTitle: {
+    fontFamily: 'Manrope_800ExtraBold',
+    color: '#FAFAFA',
+    fontSize: 22,
+  },
+  closeButton: {
+  },
+});
