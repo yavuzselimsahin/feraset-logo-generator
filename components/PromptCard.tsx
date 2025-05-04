@@ -1,45 +1,63 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Text, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, Dimensions, TouchableOpacity, Alert } from 'react-native';
+import * as Clipboard from 'expo-clipboard';
+import Toast from 'react-native-toast-message';
+
+
 
 interface PromptCardProps {
-  prompt: string;
-  logoType: string;
+    prompt: string;
+    logoType: string;
 }
 
 export default function PromptCard({ prompt, logoType }: PromptCardProps) {
 
     const handleCopyPrompt = async () => {
-        return;
-    };
+        try {
+          await Clipboard.setStringAsync(prompt);
+          Toast.show({
+            type: 'success',
+            position: 'bottom',
+            text1: 'Copied to clipboard',
+            visibilityTime: 2000
+          });
+        } catch (error) {
+          Toast.show({
+            type: 'error',
+            text1: 'Copy failed',
+            text2: 'Please try again',
+            visibilityTime: 2000
+          });
+        }
+      };
 
-  return (
+    return (
+        <View style={styles.card}>
+            {/* Card Header */}
+            <View style={styles.cardHeader}>
+                <Text style={styles.cardHeaderText}>Prompt</Text>
+                <TouchableOpacity
+                    style={styles.copyButton}
+                    onPress={handleCopyPrompt}
+                >
+                    <Ionicons name="copy-outline" size={16} color="#A1A1AA" />
+                    <Text style={styles.copyText}>Copy</Text>
+                </TouchableOpacity>
+            </View>
 
-    <View style={styles.card}>
-    {/* Card Header */}
-    <View style={styles.cardHeader}>
-        <Text style={styles.cardHeaderText}>Prompt</Text>
-        <TouchableOpacity
-            style={styles.copyButton}
-            onPress={handleCopyPrompt}
-        >
-            <Ionicons name="copy-outline" size={16} color="#A1A1AA" />
-            <Text style={styles.copyText}>Copy</Text>
-        </TouchableOpacity>
-    </View>
+            {/* Card Body */}
+            <View style={styles.cardBody}>
+                <Text style={styles.promptText}>{prompt}</Text>
+            </View>
 
-    {/* Card Body */}
-    <View style={styles.cardBody}>
-        <Text style={styles.promptText}>{prompt}</Text>
-    </View>
-
-    {/* Card Footer */}
-    <View style={styles.cardFooter}>
-        <View style={styles.badge}>
-            <Text style={styles.badgeText}>{logoType}</Text>
+            {/* Card Footer */}
+            <View style={styles.cardFooter}>
+                <View style={styles.badge}>
+                    <Text style={styles.badgeText}>{logoType}</Text>
+                </View>
+            </View>
         </View>
-    </View>
-</View>
-  );
+    );
 }
 
 const { width } = Dimensions.get('window');
