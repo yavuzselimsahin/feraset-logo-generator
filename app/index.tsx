@@ -6,9 +6,10 @@ import LoadingChip, { LoadingState } from '../components/LoadingChip';
 import LogoStyleSlider from '@/components/LogoStyleSlider';
 import { LinearGradient } from 'expo-linear-gradient';
 import SparkSvg from '../assets/icons/stars.svg'
+import { generateLogo } from '@/db/logoRequest';
 
 const logoStyles = [
-  { id: '1', title: 'No Style', image: ''},
+  { id: '1', title: 'No Style', image: '' },
   { id: '3', title: 'Monogram', image: require('../assets/images/monogram.png') },
   { id: '2', title: 'Abstract', image: require('../assets/images/abstract.png') },
   { id: '4', title: 'Mascot', image: require('../assets/images/mascot.png') },
@@ -20,31 +21,18 @@ export default function HomeScreen() {
   const [selectedStyle, setSelectedStyle] = useState('No Style');
   const [chipState, setChipState] = useState<LoadingState | null>(null);
 
-  const handleGenerate = () => {
+
+  const handleGenerate = async () => {
     if (!prompt.trim()) return;
 
     setChipState('generating');
 
-    // Random 30-40 saniye bekleme
-    const randomTime = Math.floor(Math.random() * 100) + 300;
-
-    setTimeout(() => {
-      const isSuccess = Math.random() > 0.1;
-
-      if (isSuccess) {
-        setChipState('ready'); // Set ready state
-      } else {
-        setChipState('error'); // Set error state
-      }
-
-      // 1 saniye sonra result sayfasına yönlendirme
-      // setTimeout(() => {
-      //   router.push({
-      //     pathname: '/output',
-      //     params: { prompt, logoType: selectedStyle }
-      //   });
-      // }, 1000);
-    }, randomTime);
+    // logo generate request    
+    await generateLogo({
+      prompt,
+      selectedStyle,
+      onStatusChange: setChipState
+    });
   };
 
   const handleChipPress = () => {
