@@ -8,7 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import SparkSvg from '../assets/icons/stars.svg'
 
 const logoStyles = [
-  { id: '1', title: 'No Style', image: require('../assets/images/monogram.png') },
+  { id: '1', title: 'No Style', image: ''},
   { id: '3', title: 'Monogram', image: require('../assets/images/monogram.png') },
   { id: '2', title: 'Abstract', image: require('../assets/images/abstract.png') },
   { id: '4', title: 'Mascot', image: require('../assets/images/mascot.png') },
