@@ -55,7 +55,8 @@ export default function PromptInput({ value, onChangeText, secondaryTitle }: Pro
         value={value}
         onChangeText={onChangeText}
         placeholderTextColor={'#71717A'}
-        selectionColor="#FAFAFA" 
+        selectionColor="#FAFAFA"
+        autoCorrect={false}
       />
       <Text style={styles.charCount}>{value.length}/500</Text>
     </View>

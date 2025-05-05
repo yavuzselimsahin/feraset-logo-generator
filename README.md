@@ -1,6 +1,35 @@
-# Welcome to your Expo app 👋
+# Logo Generator App - Technical Assessment
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+[![Demo Video Thumbnail](assets/images/demo-thumbnail.png)](assets/videos/demo.mp4)
+*(Click the image above to view the app demo video)*
+## Created By
+Yavuz Selim Sahin
+
+## Project Overview
+
+This application was developed as part of a technical assessment for [Company Name]. It's a React Native logo generator app built with Expo that:
+
+- Allows users to input design prompts
+- Select from different logo styles
+- Simulates AI-powered logo generation
+- Stores requests in Firebase Firestore
+- Provides real-time status updates
+
+## Technical Stack
+
+- **Framework**: Expo (React Native)
+- **Navigation**: Expo Router (file-based routing)
+- **Styling**: StyleSheet + LinearGradients
+- **Backend**: Firebase Firestore (real-time database)
+
+## Setup Instructions
+
+### Prerequisites
+
+1. Node.js (v18+ recommended)
+2. Expo CLI (`npm install -g expo-cli`)
+3. Firebase project with Firestore enabled
+4. Android/iOS simulator or physical device
 
 ## Get started
 
@@ -9,42 +38,32 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    ```bash
    npm install
    ```
-
 2. Start the app
 
    ```bash
    npx expo start
+
+3. Configure Firebase
+credentials with your own project details to get started quickly:
+   ```typescript
+   const firebaseConfig = {
+         apiKey: "YOUR_API_KEY",
+         authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+         projectId: "YOUR_PROJECT_ID",
+         storageBucket: "YOUR_PROJECT_ID.appspot.com",
+         messagingSenderId: "YOUR_SENDER_ID",
+         appId: "YOUR_APP_ID"
+         }
+
+         export default firebaseConfig;
    ```
+## Details
 
-In the output, you'll find options to open the app in a
+1. **Error Simulation**:
+The error state is simulated in db/logoRequest.ts by default, the failure rate is set to 10% (1 in 10 attempts). You can adjust this ratio in the code to test different error scenarios. And in the below error chip shown
+<img src="./assets/images/demo-error.gif" width="250" alt="error chip component">
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+2. **Processing Time Optimization**:
+While the assessment document specified 30-60 second wait times, i reduce this interval to 3-5 seconds (randomized) in the actual implementation for video recording purposes. The duration can be modified in the code for testing different intervals.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
